@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Posts list</h1>
+
+    <table border="1" cellspacing="1" cellpadding="1">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>States</th>
+            <th>Name</th>
+            <th>Actions</th>
+            <th>Workflow Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for post in posts %}
+            <tr>
+                <td><a href="{{ path('post_show', { 'id': post.id }) }}">{{ post.id }}</a></td>
+                <td>{% for k,state in post.state %}{{ k }} <br>{% endfor %}</td>
+                <td>{{ post.name }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('post_show', { 'id': post.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('post_edit', { 'id': post.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        {% if post.state['review'] is defined %}
+                            <li>
+                                <a href="{{ path('publishpost', { 'id': post.id }) }}">publish</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('rejectpost', { 'id': post.id }) }}">reject</a>
+                            </li>
+                        {% endif %}
+                        {% if post.state['information'] is defined %}
+                            <li>
+                                <a href="{{ path('checkinfopost', { 'id': post.id }) }}">checkinfo</a>
+                            </li>
+                        {% endif %}
+                        {% if post.state['published'] is defined %}
+                            <li>
+                                <a href="{{ path('checkpubpost', { 'id': post.id }) }}">checkpub</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('rejectpublischpost', { 'id': post.id }) }}">rejectpub</a>
+                            </li>
+                        {% endif %}
+                        {% if post.state['infookay'] is defined and  post.state['pubokay'] is defined %}
+                            <li>
+                                <a href="{{ path('repost', { 'id': post.id }) }}">repost</a>
+                            </li>
+                        {% endif %}
+                        {% if post.state['repost'] is defined %}
+                            <li>
+                                <a href="{{ path('to_review2', { 'id': post.id }) }}">to review 2</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </td>
+
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('post_new') }}">Create a new post</a>
+        </li>
+    </ul>
+
+    <h2>Workflow</h2>
+    <img src="{{ asset('graph.png') }}">
+{% endblock %}

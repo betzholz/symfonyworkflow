@@ -1,0 +1,40 @@
+digraph workflow {
+  ratio="compress" rankdir="LR"
+  node [fontsize="9" fontname="Arial" color="#333333" fillcolor="lightblue" fixedsize="1" width="1"];
+  edge [fontsize="9" fontname="Arial" color="#333333" arrowhead="normal" arrowsize="0.5"];
+
+  place_draft [label="draft", shape=circle, style="filled"];
+  place_review [label="review", shape=circle];
+  place_rejected [label="rejected", shape=circle];
+  place_published [label="published", shape=circle];
+  place_information [label="information", shape=circle];
+  place_pubokay [label="pubokay", shape=circle];
+  place_infookay [label="infookay", shape=circle];
+  place_repost [label="repost", shape=circle];
+  transition_to_review [label="to_review", shape=box, shape="box", regular="1"];
+  transition_to_review2 [label="to_review2", shape=box, shape="box", regular="1"];
+  transition_publish [label="publish", shape=box, shape="box", regular="1"];
+  transition_reject [label="reject", shape=box, shape="box", regular="1"];
+  transition_repost [label="repost", shape=box, shape="box", regular="1"];
+  transition_checkpub [label="checkpub", shape=box, shape="box", regular="1"];
+  transition_checkinfo [label="checkinfo", shape=box, shape="box", regular="1"];
+  transition_rejectpub [label="rejectpub", shape=box, shape="box", regular="1"];
+  place_draft -> transition_to_review [style="solid"];
+  transition_to_review -> place_review [style="solid"];
+  place_repost -> transition_to_review2 [style="solid"];
+  transition_to_review2 -> place_review [style="solid"];
+  place_review -> transition_publish [style="solid"];
+  transition_publish -> place_published [style="solid"];
+  transition_publish -> place_information [style="solid"];
+  place_review -> transition_reject [style="solid"];
+  transition_reject -> place_rejected [style="solid"];
+  place_pubokay -> transition_repost [style="solid"];
+  place_infookay -> transition_repost [style="solid"];
+  transition_repost -> place_repost [style="solid"];
+  place_published -> transition_checkpub [style="solid"];
+  transition_checkpub -> place_pubokay [style="solid"];
+  place_information -> transition_checkinfo [style="solid"];
+  transition_checkinfo -> place_infookay [style="solid"];
+  place_published -> transition_rejectpub [style="solid"];
+  transition_rejectpub -> place_review [style="solid"];
+}
