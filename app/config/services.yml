@@ -11,4 +11,4 @@ services:
     app.postReviewListener:
             class: AppBundle\EventSubscriber\PostReviewListener
             tags:
-                - { name: kernel.event_listener, event: workflow.transition ,method: rejectPub  }
+                - { name: kernel.event_listener, event: workflow.blog_publishing.guard.rejectpub ,method: rejectPub  }
